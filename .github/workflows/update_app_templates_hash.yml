@@ -33,6 +33,7 @@ jobs:
           path: aws-sam-cli
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: update_app_templates_hash
+          delete-branch: true
           title: 'feat: update SAM CLI with latest App Templates commit hash'
           body:
             This PR & commit is automatically created by GH action in App Templates repo to update the SAM CLI with latest hash of the App Templates.
