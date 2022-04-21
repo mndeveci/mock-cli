@@ -35,7 +35,7 @@ jobs:
         with: 
           path: aws-sam-cli
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: update_app_templates_hash
+          branch: develop
           delete-branch: true
           title: 'feat: update SAM CLI with latest App Templates commit hash'
           body:
