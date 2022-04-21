@@ -29,13 +29,16 @@ jobs:
           export APP_TEMPLATES_COMMIT_HASH=$(git rev-parse HEAD)
           cd ../aws-sam-cli
           cat <<< $(jq --arg commit_hash "$APP_TEMPLATES_COMMIT_HASH" --indent 4 '.app_template_repo_commit =  $commit_hash' samcli/runtime_config.json) > samcli/runtime_config.json
+          git add -u
+          git commit -m "Trying to push directly"
+          git push
       
       - name: Raise PR for SAM CLI
         uses: peter-evans/create-pull-request@v3
         with: 
           path: aws-sam-cli
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: develop
+          branch: update_app_templates_hash
           delete-branch: true
           title: 'feat: update SAM CLI with latest App Templates commit hash'
           body:
