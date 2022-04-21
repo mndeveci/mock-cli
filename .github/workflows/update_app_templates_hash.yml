@@ -1,0 +1,40 @@
+name: Update SAM CLI with latest commit hash from APP Templates
+
+on:
+  repository_dispatch:
+    types: [update-app-templates-hash]
+
+jobs:
+  updateCommitHash:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout App Templates
+        uses: actions/checkout@v2
+        with:
+          repository: mndeveci/mock-app-templates
+          path: aws-sam-cli-app-templates
+      
+      - name: Checkout SAM CLI
+        uses: actions/checkout@v2
+        with:
+          repository: mndeveci/mock-cli
+          path: aws-sam-cli
+      
+      - name: Update commit hash in SAM CLI from App Templates
+        run: |
+          cd aws-sam-cli-app-templates
+          export APP_TEMPLATES_COMMIT_HASH=$(git rev-parse HEAD)
+          cd ../aws-sam-cli
+          cat <<< $(jq --arg commit_hash "$APP_TEMPLATES_COMMIT_HASH" --indent 4 '.app_template_repo_commit =  $commit_hash' samcli/runtime_config.json) > samcli/runtime_config.json
+          echo "::set-env name=APP_TEMPLATES_COMMIT_HASH::$APP_TEMPLATES_COMMIT_HASH"
+      
+      - name: Raise PR for SAM CLI
+        uses: peter-evans/create-pull-request@v3
+        with: 
+          path: aws-sam-cli
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: update_app_templates_hash
+          title: 'feat: update SAM CLI with latest App Templates HASH ( ${{ env.APP_TEMPLATES_COMMIT_HASH }} )'
+          body:
+            This PR & commit is automatically created by GH action in App Templates repo to update the SAM CLI with latest hash of the App Templates.
+      
