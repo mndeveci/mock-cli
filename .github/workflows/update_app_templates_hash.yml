@@ -7,7 +7,6 @@ on:
 jobs:
   updateCommitHash:
     permissions:
-      pull-requests: write
       contents: write
     runs-on: ubuntu-latest
     steps:
