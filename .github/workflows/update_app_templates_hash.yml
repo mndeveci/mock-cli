@@ -44,6 +44,7 @@ jobs:
           git reset --hard develop
           cat <<< $(jq --arg commit_hash "$APP_TEMPLATES_COMMIT_HASH" --indent 4 '.app_template_repo_commit =  $commit_hash' samcli/runtime_config.json) > samcli/runtime_config.json
           git add -u
+          git diff --quiet && exit 0
           git commit -m "feat: updating app templates repo hash with ($APP_TEMPLATES_COMMIT_HASH)"
           git push --force origin update_app_templates_hash
           gh pr create --base develop --head update_app_templates_hash --title "feat: updating app templates repo hash with ($APP_TEMPLATES_COMMIT_HASH)" --body "This PR & commit is automatically created from App Templates repo to update the SAM CLI with latest hash of the App Templates."
