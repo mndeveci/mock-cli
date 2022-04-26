@@ -33,6 +33,8 @@ jobs:
       
       - name: Update hash & Raise PR for SAM CLI
         run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
           cd aws-sam-cli-app-templates
           export APP_TEMPLATES_COMMIT_HASH=$(git rev-parse HEAD)
           cd ../aws-sam-cli
