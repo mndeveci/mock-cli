@@ -38,7 +38,7 @@ jobs:
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           cd aws-sam-cli-app-templates
-          export APP_TEMPLATES_COMMIT_HASH=$(git rev-parse HEAD)
+          APP_TEMPLATES_COMMIT_HASH=$(git rev-parse HEAD)
           cd ../aws-sam-cli
           git checkout -b update_app_templates_hash
           git reset --hard develop
@@ -46,6 +46,7 @@ jobs:
           git add -u
           git commit -m "feat: updating app templates repo hash with ($APP_TEMPLATES_COMMIT_HASH)"
           git push --force origin update_app_templates_hash
+          echo $GITHUB_TOKEN | gh auth login --with-token
           gh pr close update_app_templates_hash --repo mndeveci/mock-cli
           gh pr create --base develop --head update_app_templates_hash --title "feat: updating app templates repo hash with ($APP_TEMPLATES_COMMIT_HASH)" --body "This PR & commit is automatically created from App Templates repo to update the SAM CLI with latest hash of the App Templates."
 
