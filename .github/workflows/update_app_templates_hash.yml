@@ -1,8 +1,8 @@
 name: Update SAM CLI with latest commit hash from APP Templates
 
 on:
-  repository_dispatch:
-    types: [update-app-templates-hash]
+  schedule:
+    - cron: "* * * * MON-FRI"
 
 jobs:
   updateCommitHash:
@@ -39,5 +39,5 @@ jobs:
           delete-branch: true
           title: 'feat: update SAM CLI with latest App Templates commit hash'
           body:
-            This PR & commit is automatically created by GH action in App Templates repo to update the SAM CLI with latest hash of the App Templates.
+            This PR & commit is automatically created by GH action to update the SAM CLI with latest hash of the App Templates.
       
