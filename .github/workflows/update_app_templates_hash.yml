@@ -3,6 +3,7 @@ name: Update SAM CLI with latest commit hash from APP Templates
 on:
   schedule:
     - cron: "* * * * *"
+  workflow_dispatch: {}
 
 jobs:
   updateCommitHash:
