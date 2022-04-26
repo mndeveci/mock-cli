@@ -2,7 +2,7 @@ name: Update SAM CLI with latest commit hash from APP Templates
 
 on:
   schedule:
-    - cron: "*/5 * * * MON-FRI"
+    - cron: "* * * * MON-FRI"
 
 jobs:
   updateCommitHash:
