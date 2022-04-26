@@ -15,7 +15,7 @@ jobs:
       - name: Checkout App Templates
         uses: actions/checkout@v3
         with:
-          repository: aws/mock-app-templates
+          repository: mndeveci/mock-app-templates
           path: aws-sam-cli-app-templates
       
       - name: Checkout SAM CLI
