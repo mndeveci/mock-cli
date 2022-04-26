@@ -45,7 +45,7 @@ jobs:
           cat <<< $(jq --arg commit_hash "$APP_TEMPLATES_COMMIT_HASH" --indent 4 '.app_template_repo_commit =  $commit_hash' samcli/runtime_config.json) > samcli/runtime_config.json
           git add -u
           git status
-          git diff --quiet || exit 0 # exit if there is no change
+          git diff --quiet && exit 0 # exit if there is no change
           git commit -m "feat: updating app templates repo hash with ($APP_TEMPLATES_COMMIT_HASH)"
           git push --force origin update_app_templates_hash
           gh pr list --repo mndeveci/mock-cli --head update_app_templates_hash && exit 0 # if there is existing pr, nothing to do
